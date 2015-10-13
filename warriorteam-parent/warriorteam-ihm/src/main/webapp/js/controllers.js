@@ -26,7 +26,7 @@ warriorApp.controller('loginCtrl', ['$scope', '$routeParams', 'loginService', '$
 	// Fonction de test pour le menu du haut
 	$scope.test = function(){
 		alert("Home test");
-	}
+	};
 	
 	// Fonction pour le carousel pour eviter le redirection par le routeProvider
 	$scope.slide = function (dir) {
@@ -40,21 +40,37 @@ warriorApp.controller('loginCtrl', ['$scope', '$routeParams', 'loginService', '$
 		loginService.auth(j_username, j_password).then(
 				function(data){
 					alert("Data in return : "+data.data.ip);
-					if(data.data.ip != null){
+//					if(data.data.ip != null){
+					if(data.name != null){
 						// Gestion du data utilisateur
 						
 						// Creation du cookie avec session
 						
+						// Redirection vers page accueil
+						
+						
+						
 						// Fermeture du modal
 						//$("#myModal").modal('show');
-						$("#myModal").modal('hide');
-					
-						// Redirection vers page accueil
-						//$location.path("/accueil");
+						//$("#myModal").modal('hide');		
+						
+						$('#myModal').on('hidden.bs.modal', function () {
+							$location.path("/accueil");
+						});
 					}
 				},
 				function(error){
 					alert('Erreur authentification !');
+					
+					$("#myModal").modal('hide');
+					$("#myModal").on('hidden.bs.modal', function () {
+					    $location.path("/accueil");
+					    $scope.$apply();
+					});
+					
+//					$('#myModal').on('hidden.bs.modal', function () {
+//						
+//					});
 				});
 	};
 	
@@ -73,6 +89,7 @@ warriorApp.controller('accueilCtrl', ['$scope', '$routeParams' ,'$location', fun
 	// User authentifie deja
 	var user = $scope.user;
 	if(user == null || !user.connected){
+		
 		$location.path("/login");
 	}
 	

@@ -37,5 +37,5 @@ warapp.service('loginService', ['$http', '$rootScope', function ($http, $rootSco
 		});
 		return promise;
 		
-	}
-}])
+	};
+}]);
