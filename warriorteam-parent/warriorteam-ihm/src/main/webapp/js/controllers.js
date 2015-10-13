@@ -39,43 +39,38 @@ warriorApp.controller('loginCtrl', ['$scope', '$routeParams', 'loginService', '$
 		// Appel au service de login
 		loginService.auth(j_username, j_password).then(
 				function(data){
-					alert("Data in return : "+data.data.ip);
-//					if(data.data.ip != null){
-					if(data.name != null){
+					alert("Data in return : "+data.data[0].employeeName);
+					if(data.data[0].employeeName != null){
 						// Gestion du data utilisateur
 						
 						// Creation du cookie avec session
 						
-						// Redirection vers page accueil
-						
-						
-						
 						// Fermeture du modal
-						//$("#myModal").modal('show');
-						//$("#myModal").modal('hide');		
-						
-						$('#myModal').on('hidden.bs.modal', function () {
-							$location.path("/accueil");
+						// et Redirection vers page accueil
+						$("#myModal").modal('hide');
+						$("#myModal").on('hidden.bs.modal', function () {
+						    $location.path("/accueil");
+						    $scope.$apply();
 						});
 					}
 				},
 				function(error){
 					alert('Erreur authentification !');
-					
-					$("#myModal").modal('hide');
-					$("#myModal").on('hidden.bs.modal', function () {
-					    $location.path("/accueil");
-					    $scope.$apply();
-					});
-					
-//					$('#myModal').on('hidden.bs.modal', function () {
-//						
-//					});
 				});
 	};
 	
-	
-
+	// Fonction de controle du formulaire de login
+	$scope.save = function() {
+	    $scope.$broadcast('show-errors-check-validity');
+	    
+	    if ($scope.userForm.$valid) {
+	      // Appel au login
+	    	this.auth('user','pwd');
+	    } else {
+	      alert("There are invalid fields");
+	    }
+	  };
+	  
 }]);
 
 /*******************************************************************************

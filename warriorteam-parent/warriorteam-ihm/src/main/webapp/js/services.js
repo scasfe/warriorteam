@@ -25,7 +25,7 @@ warapp.service('loginService', ['$http', '$rootScope', function ($http, $rootSco
 		var promise=$http(
 				{
 					method : 'GET',
-					url : 'http://ip.jsontest.com/'
+					url : '/warriorteam-rs/rest/auth/json/employees'
 				}
 			)
 			.success(function(data, status, headers, config){
